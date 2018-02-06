@@ -78,7 +78,9 @@ var config =  {
                     title:'幸运奖', //奖项名称
                     count:1,     //奖项数量
                     capacity:1,  //一次抽取数量[1，count]
-                    namesOfLine:1 //获奖区每行显示几个名字 [1,2,3,4,6,12]
+                    namesOfLine:1, //获奖区每行显示几个名字 [1,2,3,4,6,12]
+		            except:['胡歌','张铭恩'] //排除users.txt中的名单
+
                 }
             ]
         }

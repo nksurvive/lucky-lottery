@@ -112,8 +112,8 @@ function addOne(){
 function randomUsers() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];
-		task.restUsers=filterRestUser(task.restUsers,current.except);
-        var length = task.restUsers.length;
+		var restUsers=filterRestUser(task.restUsers,current.except);
+        var length = restUsers.length;
 
         var rest = current.count - current.consume;
         var consumeNumber = rest < current.capacity ? rest : current.capacity;
@@ -122,8 +122,8 @@ function randomUsers() {
         var randomUsers = [];
         while (randomUsers.length < consumeNumber) {
             var idx = Math.floor(Math.random() * length);
-            if (randomUsers.indexOf(task.restUsers[idx]) == -1) {
-                randomUsers.push(task.restUsers[idx]);
+            if (randomUsers.indexOf(restUsers[idx]) == -1) {
+                randomUsers.push(restUsers[idx]);
             }
         }
         tasks[current.taskId].lastRandUsers = randomUsers;

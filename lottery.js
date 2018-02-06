@@ -20,7 +20,7 @@ if (!Array.indexOf) {
 }
 initData();
 
-function filterRestUser(except) {
+function filterRestUser(allUsers,except) {
     var restUsers = [];
     for (var i = 0; i < allUsers.length; i++) {
         var user = allUsers[i].trim();
@@ -43,7 +43,7 @@ function initData() {
         tasks.push({
             id: i,
             title: task.title,
-            restUsers: filterRestUser(task.except),
+            restUsers: filterRestUser(allUsers,task.except),
             consumeUsers: [],
             lastRandUsers: []
         });
@@ -89,18 +89,6 @@ function canStart() {
 }
 
 
-function filterRestUserFromRest(allUsers,except) {
-    var restUsers = [];
-    for (var i = 0; i < allUsers.length; i++) {
-        var user = allUsers[i].trim();
-        if (except.indexOf(user) == -1) {
-            restUsers.push(user);
-        }
-    }
-    console.log('排除名单：' + except.toString());
-    console.log('剩下名单：' + restUsers.toString());
-    return restUsers;
-}
 
 
 function isRewardCompleted(reward) {
@@ -124,7 +112,7 @@ function addOne(){
 function randomUsers() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];
-		task.restUsers=filterRestUserFromRest(task.restUsers,current.except);
+		task.restUsers=filterRestUser(task.restUsers,current.except);
         var length = task.restUsers.length;
 
         var rest = current.count - current.consume;

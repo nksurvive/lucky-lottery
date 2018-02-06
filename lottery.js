@@ -4,11 +4,6 @@ var config = require('./config').config;
 var fs = require("fs");
 var data = fs.readFileSync(__dirname + '/data/users.txt');
 var allUsers = data.toString().trim().split("\n");
-var allUsers = [];
-for(var i = 0;i<460;i++){
-	allUsers.push(i)
-}
-console.log(allUsers)
 var current = null;
 var tasks = [];
 var rewards = [];
@@ -25,7 +20,7 @@ if (!Array.indexOf) {
 }
 initData();
 
-function filterRestUser(except) {
+function filterRestUser(allUsers,except) {
     var restUsers = [];
     for (var i = 0; i < allUsers.length; i++) {
         var user = allUsers[i].trim();
@@ -38,13 +33,17 @@ function filterRestUser(except) {
     return restUsers;
 }
 
+
+
+
+
 function initData() {
     for (var i = 0; i < config.tasks.length; i++) {
         var task = config.tasks[i];
         tasks.push({
             id: i,
             title: task.title,
-            restUsers: filterRestUser(task.except),
+            restUsers: filterRestUser(allUsers,task.except),
             consumeUsers: [],
             lastRandUsers: []
         });
@@ -57,14 +56,13 @@ function initData() {
                     title: reward.title,
                     count: reward.count,
                     capacity: reward.capacity,
-					except:reward.except,
                     consume: 0,
-                    cols: getCols(reward.namesOfLine)
+                    cols: getCols(reward.namesOfLine),
+					except:reward.except
                 });
             }
         }
     }
-	console.log(tasks)
 }
 
 function getCols(number) {
@@ -90,6 +88,9 @@ function canStart() {
     return !isRewardCompleted(current);
 }
 
+
+
+
 function isRewardCompleted(reward) {
     if (reward != null) {
         return reward.count > reward.consume ? false : true;
@@ -98,19 +99,21 @@ function isRewardCompleted(reward) {
 }
 
 function nextReward() {
-    if (isRewardCompleted(current)) {	
+    if (isRewardCompleted(current)) {
         current = rewards.shift();
     }
     return current;
 }
+function addOne(){
+	current.count++;
+    console.log('抽取总数增加为：' + current.count);
 
+}
 function randomUsers() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];
-		
-
-		//console.log('剩下名单'+task.restUsers)
-        var length = task.restUsers.length;
+		var restUsers=filterRestUser(task.restUsers,current.except);
+        var length = restUsers.length;
 
         var rest = current.count - current.consume;
         var consumeNumber = rest < current.capacity ? rest : current.capacity;
@@ -119,8 +122,8 @@ function randomUsers() {
         var randomUsers = [];
         while (randomUsers.length < consumeNumber) {
             var idx = Math.floor(Math.random() * length);
-            if (randomUsers.indexOf(task.restUsers[idx]) == -1 && current.except.indexOf(task.restUsers[idx]) == -1) {
-                randomUsers.push(task.restUsers[idx]);
+            if (randomUsers.indexOf(restUsers[idx]) == -1) {
+                randomUsers.push(restUsers[idx]);
             }
         }
         tasks[current.taskId].lastRandUsers = randomUsers;
@@ -132,7 +135,7 @@ function randomUsers() {
 function completedOnceRolling() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];
-        //console.log('Lottery taskId ' + current.taskId + ' 随机用户: ' + task.lastRandUsers.toString());
+        console.log('Lottery taskId ' + current.taskId + ' 随机用户: ' + task.lastRandUsers.toString());
         if (task.lastRandUsers.length > 0) {
             var rest = current.count - current.consume;
             var consumeNumber = rest < current.capacity ? rest : current.capacity;
@@ -146,17 +149,16 @@ function completedOnceRolling() {
             tasks[current.taskId].restUsers = restUsers;
             tasks[current.taskId].lastRandUsers = [];
             tasks[current.taskId].consumeUsers.push(task.lastRandUsers);
-            //console.log('Lottery taskId ' + current.taskId + ' 余下:' + tasks[current.taskId].restUsers.toString());
+            console.log('Lottery taskId ' + current.taskId + ' 余下:' + tasks[current.taskId].restUsers.toString());
             return true;
         }
     }
     return false;
 }
-function addOne(){
-	current.count++
-}
+
 
 module.exports = {
+	addOne:addOne,
     config: config,
     currentReward: () => {
         return current;
@@ -164,6 +166,5 @@ module.exports = {
     canStart: canStart,
     nextReward: nextReward,
     randomUsers: randomUsers,
-    completedOnceRolling: completedOnceRolling,
-	addNum: addOne
+    completedOnceRolling: completedOnceRolling
 }

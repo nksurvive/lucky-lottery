@@ -291,6 +291,9 @@ ipcRenderer.on('global-shortcut', (event, arg) => {
                 audio.pause() :
                 audio.play();
             break;
+		case 'addone':
+			if(confirm('确定增加一个抽奖名额?')) lottery.addOne();
+			break;			
         case 'capture': //截屏
             captureResult();
             break;

@@ -42,6 +42,10 @@ function createWindow () {
   globalShortcut.register('alt+v',()=>{
     mainWindow.webContents.send('global-shortcut','novoice');
   });
+  //当前奖重抽一个
+  globalShortcut.register('alt+p',()=>{
+    mainWindow.webContents.send('global-shortcut','addone');
+  });
   //退出
   globalShortcut.register('ctrl+q',()=>{
     app.quit();

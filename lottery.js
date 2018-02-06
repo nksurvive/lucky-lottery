@@ -33,6 +33,10 @@ function filterRestUser(except) {
     return restUsers;
 }
 
+
+
+
+
 function initData() {
     for (var i = 0; i < config.tasks.length; i++) {
         var task = config.tasks[i];
@@ -53,7 +57,8 @@ function initData() {
                     count: reward.count,
                     capacity: reward.capacity,
                     consume: 0,
-                    cols: getCols(reward.namesOfLine)
+                    cols: getCols(reward.namesOfLine),
+					except:reward.except
                 });
             }
         }
@@ -83,7 +88,23 @@ function canStart() {
     return !isRewardCompleted(current);
 }
 
+
+function filterRestUserFromRest(allUsers,except) {
+    var restUsers = [];
+    for (var i = 0; i < allUsers.length; i++) {
+        var user = allUsers[i].trim();
+        if (except.indexOf(user) == -1) {
+            restUsers.push(user);
+        }
+    }
+    console.log('排除名单：' + except.toString());
+    console.log('剩下名单：' + restUsers.toString());
+    return restUsers;
+}
+
+
 function isRewardCompleted(reward) {
+	tasks[reward.taskId].restUsers=filterRestUserFromRest(tasks[reward.taskId].restUsers,reward.except);
     if (reward != null) {
         return reward.count > reward.consume ? false : true;
     }
@@ -96,7 +117,11 @@ function nextReward() {
     }
     return current;
 }
+function addOne(){
+	current.count++;
+    console.log('抽取总数增加为：' + current.count);
 
+}
 function randomUsers() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];

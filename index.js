@@ -257,6 +257,18 @@ function startRolling() {
         }
     }
 }
+//刷新屏幕显示
+function refreshInfo(current)
+{
+	if (current) {
+		setRewardInfo(current);
+		if (current.consume === 0) {
+			setNames('<h1>' + config.rewardWelcomeMessage + '</h1>');
+		}
+	} else {
+		setNames('<h1>' + config.allEndMessage + '</h1>');
+	}
+}
 
 //接受命令
 ipcRenderer.on('global-shortcut', (event, arg) => {
@@ -277,14 +289,8 @@ ipcRenderer.on('global-shortcut', (event, arg) => {
             break;
         case 'next': //切换下一轮抽奖
             var current = lottery.nextReward();
-            if (current) {
-                setRewardInfo(current);
-                if (current.consume === 0) {
-                    setNames('<h1>' + config.rewardWelcomeMessage + '</h1>');
-                }
-            } else {
-                setNames('<h1>' + config.allEndMessage + '</h1>');
-            }
+			refreshInfo(current);
+
             break;
         case 'novoice': //关闭背景音乐
             audio.paused ?
@@ -295,14 +301,7 @@ ipcRenderer.on('global-shortcut', (event, arg) => {
 			if(confirm('确定增加一个抽奖名额?')) {
 				lottery.addOne();
 				var current = lottery.nextReward();
-				if (current) {
-					setRewardInfo(current);
-					if (current.consume === 0) {
-						setNames('<h1>' + config.rewardWelcomeMessage + '</h1>');
-					}
-				} else {
-					setNames('<h1>' + config.allEndMessage + '</h1>');
-				}
+				refreshInfo(current);
 			}
 			break;			
         case 'capture': //截屏

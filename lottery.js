@@ -104,7 +104,6 @@ function filterRestUserFromRest(allUsers,except) {
 
 
 function isRewardCompleted(reward) {
-	tasks[reward.taskId].restUsers=filterRestUserFromRest(tasks[reward.taskId].restUsers,reward.except);
     if (reward != null) {
         return reward.count > reward.consume ? false : true;
     }
@@ -125,6 +124,7 @@ function addOne(){
 function randomUsers() {
     if (!isRewardCompleted(current)) {
         var task = tasks[current.taskId];
+		task.restUsers=filterRestUserFromRest(task.restUsers,current.except);
         var length = task.restUsers.length;
 
         var rest = current.count - current.consume;

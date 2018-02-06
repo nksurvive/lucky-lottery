@@ -292,7 +292,18 @@ ipcRenderer.on('global-shortcut', (event, arg) => {
                 audio.play();
             break;
 		case 'addone':
-			if(confirm('确定增加一个抽奖名额?')) lottery.addOne();
+			if(confirm('确定增加一个抽奖名额?')) {
+				lottery.addOne();
+				var current = lottery.nextReward();
+				if (current) {
+					setRewardInfo(current);
+					if (current.consume === 0) {
+						setNames('<h1>' + config.rewardWelcomeMessage + '</h1>');
+					}
+				} else {
+					setNames('<h1>' + config.allEndMessage + '</h1>');
+				}
+			}
 			break;			
         case 'capture': //截屏
             captureResult();

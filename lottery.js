@@ -107,7 +107,6 @@ function nextReward() {
 function addOne(){
 	current.count++;
     console.log('抽取总数增加为：' + current.count);
-
 }
 function randomUsers() {
     if (!isRewardCompleted(current)) {

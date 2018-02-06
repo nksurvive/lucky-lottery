@@ -94,25 +94,30 @@ electron-packager ./ lucky-lottery --platform=win32 --out ../lucky-lottery-relea
                     title:'四等奖',  //奖项名称
                     count:70,     //奖项数量
                     capacity:70,//一次抽取数量[1，count]
-                    namesOfLine:6  //获奖区每行显示几个名字 [1,2,3,4,6,12]
+                    namesOfLine:6,  //获奖区每行显示几个名字 [1,2,3,4,6,12]
+	            except:['胡歌','张铭恩'] //排除剩余名单
+
                 },
                 {
                     title:'三等奖', //奖项名称
                     count:5,     //奖项数量
                     capacity:5,//一次抽取数量[1，count]
-                    namesOfLine:1//获奖区每行显示几个名字 [1,2,3,4,6,12]
+                    namesOfLine:1,//获奖区每行显示几个名字 [1,2,3,4,6,12]
+	            except:['胡歌','张铭恩'] //排除剩余名单
                 },
                 {
                     title:'二等奖',  //奖项名称
                     count:5,//奖项数量
                     capacity:5,//一次抽取数量[1，count]
-                    namesOfLine:1   //获奖区每行显示几个名字 [1,2,3,4,6,12]
+                    namesOfLine:1,   //获奖区每行显示几个名字 [1,2,3,4,6,12]
+	            except:['胡歌','张铭恩'] //排除剩余名单
                 },
                 {
                     title:'一等奖', //奖项名称
                     count:5,     //奖项数量
                     capacity:5,//一次抽取数量[1，count]
-                    namesOfLine:1    //获奖区每行显示几个名字 [1,2,3,4,6,12]
+                    namesOfLine:1,    //获奖区每行显示几个名字 [1,2,3,4,6,12]
+	            except:['胡歌','张铭恩'] //排除剩余名单
                 }
             ]
         },

@@ -40,7 +40,7 @@ var config =  {
                     count:70,     //奖项数量
                     capacity:70,//一次抽取数量[1，count]
                     namesOfLine:6,  //获奖区每行显示几个名字 [1,2,3,4,6,12]
-		            except:['胡歌','张铭恩'], //排除users.txt中的名单
+		            except:['胡歌','张铭恩'] //排除users.txt中的名单
 
                 },
                 {
@@ -48,7 +48,7 @@ var config =  {
                     count:10,     //奖项数量
                     capacity:5,//一次抽取数量[1，count]
                     namesOfLine:1,//获奖区每行显示几个名字 [1,2,3,4,6,12]
-		            except:['胡歌','张铭恩'], //排除users.txt中的名单
+		            except:['胡歌','张铭恩'] //排除users.txt中的名单
 
                 },
                 {
@@ -56,7 +56,7 @@ var config =  {
                     count:5,//奖项数量
                     capacity:5,//一次抽取数量[1，count]
                     namesOfLine:1,   //获奖区每行显示几个名字 [1,2,3,4,6,12]
-		            except:['胡歌','张铭恩'], //排除users.txt中的名单
+		            except:['胡歌','张铭恩'] //排除users.txt中的名单
 
                 },
                 {
@@ -64,7 +64,7 @@ var config =  {
                     count:5,     //奖项数量
                     capacity:5,//一次抽取数量[1，count]
                     namesOfLine:1,    //获奖区每行显示几个名字 [1,2,3,4,6,12]
-		            except:['胡歌','张铭恩'], //排除users.txt中的名单
+		            except:['胡歌','张铭恩'] //排除users.txt中的名单
 
                 }
             ]

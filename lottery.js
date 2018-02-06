@@ -152,7 +152,7 @@ function completedOnceRolling() {
     }
     return false;
 }
-function addNum(){
+function addOne(){
 	current.count++
 }
 
@@ -165,5 +165,5 @@ module.exports = {
     nextReward: nextReward,
     randomUsers: randomUsers,
     completedOnceRolling: completedOnceRolling,
-	addNum: addNum
+	addNum: addOne
 }
